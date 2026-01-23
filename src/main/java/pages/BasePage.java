@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -12,13 +13,22 @@ import java.time.Duration;
 
 public abstract class BasePage extends LoggerUtils {
 
+    // Locators
+    @FindBy (id = "cookie-law-info-bar")
+    protected WebElement cookieConsentBannerLocator;
+
+    @FindBy (id = "wt-cli-accept-all-btn")
+    protected WebElement acceptCookiesButtonLocator;
+
+    @FindBy (xpath = "//div[contains(@id, 'wrap-close-button')]")
+    protected WebElement closeBannerButtonLocator;
+
     protected WebDriver driver;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
 
     protected WebElement getWebElement(By locator) {
         log.trace("getWebElement(" + locator + ")");
@@ -96,7 +106,7 @@ public abstract class BasePage extends LoggerUtils {
     }
 
     protected WebElement waitForElementToBeVisible(WebElement element, int timeout) {
-        log.trace("waitForElementToBeInvisible(" + element + ", " + timeout + ")");
+        log.trace("waitForElementToBeVisible(" + element + ", " + timeout + ")");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         wait.until(ExpectedConditions.visibilityOf(element));
         return null;
@@ -108,9 +118,53 @@ public abstract class BasePage extends LoggerUtils {
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
+    protected boolean waitForElementToBeInvisible(WebElement element, int timeout) {
+        log.trace("waitForElementToBeInvisible(" + element + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
     protected void clickWebElement(WebElement element) {
         log.trace("clickWebElement(" + element + ")");
         element.click();
+    }
+
+    public void handleCookies(){
+        log.trace("handleCookies()");
+        if(isWebElementDisplayed(cookieConsentBannerLocator)){
+            log.info("Cookie consent banner is displayed. Accepting cookies...");
+            waitForElementToBeClickable(acceptCookiesButtonLocator, 5);
+            clickWebElement(acceptCookiesButtonLocator);
+        } else {
+            log.info("Cookie consent banner is not displayed, proceeding with test.");
+        }
+    }
+
+    public void handleBanner(){
+        log.trace("handleBanner()");
+        if(isWebElementDisplayed(closeBannerButtonLocator)){
+            log.info("Close banner button is displayed. Closing banner...");
+            waitForElementToBeClickable(closeBannerButtonLocator, 5);
+            clickWebElement(closeBannerButtonLocator);
+        } else {
+            log.info("Close banner button is not displayed, proceeding with test.");
+        }
+
+    }
+
+    protected void waitUntilGone(By locator, int iTime) {
+        new WebDriverWait(driver, Duration.ofSeconds(iTime))
+                .until(ExpectedConditions.numberOfElementsToBe(locator, 0));
+    }
+
+    protected void sleepSeconds(int iSeconds) {
+        log.trace("sleepSeconds(" + iSeconds + ")");
+        try {
+            Thread.sleep(Duration.ofSeconds(iSeconds).toMillis());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Sleep was interrupted", e);
+        }
     }
 
 }

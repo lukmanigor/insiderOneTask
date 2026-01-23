@@ -1,19 +1,52 @@
 package tests;
 
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.OpenPositionsPage;
+import pages.QAJobsPage;
 
 public class FilterQAJobs extends BaseTest {
 
     @Test
     public void testFilterQAJobs() {
+        WebDriver driver = setupDriver();
+        String sExpectedLocation = "Istanbul, Turkiye";
+        String sExpectedDepartment = "Quality Assurance";
+        String sPositionTitle = "Software Quality Assurance Engineer (Remote)";
 
      try {
          log.info("Test filtering QA jobs");
-         // Implement test steps for filtering QA jobs here
+         QAJobsPage qaJobsPage = new QAJobsPage(driver).open();
+         Assert.assertTrue(qaJobsPage.isQAJobsPageLoaded(), "QA Jobs page is not loaded!");
+
+         log.info("Click 'See All QA Jobs' button and verify Open Positions page is loaded");
+         OpenPositionsPage openPositionsPage = qaJobsPage.clickSeeAllQAJobsButton();
+         Assert.assertTrue(openPositionsPage.isOpenPositionsPageLoaded(), "Open Positions page is not loaded!");
+
+         log.debug("Click Location filter dropdown and select Istanbul, Turkiye");
+         openPositionsPage.selectLocation("Istanbul, Turkiye");
+         openPositionsPage.selectDepartment("Quality Assurance");
+
+         log.debug("Verify that Location filter is set to Istanbul, Turkiye");
+         String sSelectedLocation = openPositionsPage.getSelectedLocation();
+         Assert.assertEquals(sSelectedLocation, sExpectedLocation, "Location filter is not set to Istanbul, Turkiye!");
+
+         log.debug("Verify that Department filter is set to Quality Assurance");
+         String sSelectedDepartment = openPositionsPage.getSelectedDepartment();
+         Assert.assertEquals(sSelectedDepartment, sExpectedDepartment, "Department filter is not set to Quality Assurance!");
+
+         log.debug("Verify jobs list is displayed");
+         Assert.assertTrue(openPositionsPage.isJobsListDisplayed(), "Jobs list is not displayed!");
+
+         log.debug("Verify listed jobs are QA jobs in Istanbul, Turkiye");
+         openPositionsPage.verifyQAPositions();
+
+         log.debug("Click on 'Software Quality Assurance Engineer' View Role button and verify user is redirected to jobs.lever page");
+         openPositionsPage.clickViewRoleAndVerifyLeverTabOpened(sPositionTitle);
 
      } finally {
-         // Any necessary cleanup can be done here
+         quitDriver(driver);
      }
     }
-
 }

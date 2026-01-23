@@ -20,7 +20,7 @@ public class VerifyWelcomePageLoaded extends BaseTest {
             // Verify Welcome Page is loaded
             Assert.assertTrue(welcomePage.isWelcomePageLoaded());
 
-            // Verify all main elements are displayed
+            // Verify main elements are displayed
             Assert.assertTrue(welcomePage.isHeaderMenuDisplayed(), "Header Menu is not displayed!");
             Assert.assertTrue(welcomePage.isTopHeaderMenuDisplayed(), "Top Header Menu is not displayed!");
             Assert.assertTrue(welcomePage.isHeroCardDisplayed(), "Hero Card is not displayed!");
