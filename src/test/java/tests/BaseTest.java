@@ -2,15 +2,12 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
-import utils.LoggerUtils;
-import utils.PropertiesUtils;
-import utils.ScreenshotUtils;
-import utils.WebDriverUtils;
+import utils.*;
 
 public abstract class BaseTest extends LoggerUtils {
 
     protected WebDriver setupDriver() {
-        log.debug("setupoDriver()");
+        log.debug("setupDriver()");
         return WebDriverUtils.setupDriver();
     }
 

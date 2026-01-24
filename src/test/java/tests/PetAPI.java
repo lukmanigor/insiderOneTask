@@ -13,17 +13,23 @@ public class PetAPI extends BaseTest{
 
     @Test
     public void testPetAPI() {
-        // Add a new pet to the store, get the pet, update the pet, and delete the pet
+        // Add a new pet to the store
         int iPetId = RestApiUtils.addPetToStore(addPetJSON);
+        // Get pet from store
         RestApiUtils.getPetFromStore(iPetId);
+        // Update pet in store
         RestApiUtils.updatePetInStore(updatePetJSON);
+        // Remove pet from store
         RestApiUtils.removePetFromStore(iPetId);
+    }
 
+    @Test
+    public void testPetAPIInvalid(){
         // Get pet with invalid ID
         RestApiUtils.getPetFromStoreInvalidId(-1);
         // Add invalid pet to store
         RestApiUtils.addInvalidPetToStore(emptyJSON);
-        // Update pet with invalid payload
+        // Delete pet with invalid id
         RestApiUtils.deletePetFromStoreInvalidId(999999);
 
     }

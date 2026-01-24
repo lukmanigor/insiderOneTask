@@ -27,7 +27,6 @@ public class WebDriverUtils extends LoggerUtils{
             case "chrome" : {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--window-size=1600,900");
-
                     System.setProperty("webdriver.chrome.driver", sPathDriverChrome);
                     driver = new ChromeDriver(options);
 
