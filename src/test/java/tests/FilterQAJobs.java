@@ -2,20 +2,30 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.OpenPositionsPage;
 import pages.QAJobsPage;
 
 public class FilterQAJobs extends BaseTest {
 
+    private WebDriver driver;
+
+    @BeforeMethod
+    public void setUpTest() {
+        log.info("Starting test: FilterQAJobs");
+        driver = setupDriver();
+    }
+
     @Test
     public void testFilterQAJobs() {
-        WebDriver driver = setupDriver();
+
         String sExpectedLocation = "Istanbul, Turkiye";
         String sExpectedDepartment = "Quality Assurance";
         String sPositionTitle = "Software Quality Assurance Engineer (Remote)";
 
-     try {
          log.info("Test filtering QA jobs");
          QAJobsPage qaJobsPage = new QAJobsPage(driver).open();
          Assert.assertTrue(qaJobsPage.isQAJobsPageLoaded(), "QA Jobs page is not loaded!");
@@ -45,8 +55,10 @@ public class FilterQAJobs extends BaseTest {
          log.debug("Click on 'Software Quality Assurance Engineer' View Role button and verify user is redirected to jobs.lever page");
          openPositionsPage.clickViewRoleAndVerifyLeverTabOpened(sPositionTitle);
 
-     } finally {
-         quitDriver(driver);
-     }
+    }
+    @AfterMethod(alwaysRun = true)
+    public void tearDownTest(ITestResult testResult) {
+        log.info("Ending test: FilterQAJobs");
+        tearDown(driver, testResult);
     }
 }

@@ -41,7 +41,7 @@ public class PropertiesUtils extends LoggerUtils{
         return getProperty("driversFolder");
     }
 
-    public static boolean getTakeScreenShots() {
+    public static boolean getTakeScreenshots() {
         return Boolean.parseBoolean(getProperty("takeScreenshots"));
     }
 

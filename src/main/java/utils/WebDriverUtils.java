@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.time.Duration;
@@ -50,7 +51,7 @@ public class WebDriverUtils extends LoggerUtils{
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(Time.SCRIPT_TIMEOUT));
 
         // Maximize Browser
-        driver.manage().window().maximize();
+//        driver.manage().window().maximize();
 
         return driver;
     }
@@ -58,5 +59,13 @@ public class WebDriverUtils extends LoggerUtils{
     public static void quitDriver(WebDriver driver) {
         log.debug("quitDriver()");
         driver.quit();
+    }
+
+    public static boolean hasDriverQuit(WebDriver driver) {
+        if(driver != null) {
+            return ((RemoteWebDriver) driver).getSessionId() == null;
+        } else {
+            return true;
+        }
     }
 }

@@ -1,7 +1,10 @@
 package tests;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 import utils.LoggerUtils;
+import utils.PropertiesUtils;
+import utils.ScreenshotUtils;
 import utils.WebDriverUtils;
 
 public abstract class BaseTest extends LoggerUtils {
@@ -16,8 +19,23 @@ public abstract class BaseTest extends LoggerUtils {
         WebDriverUtils.quitDriver(driver);
     }
 
-    protected void tearDown(WebDriver driver) {
+    private void ifFailed(WebDriver driver, ITestResult testResult) {
+        if(testResult.getStatus() == ITestResult.FAILURE) {
+            if (PropertiesUtils.getTakeScreenshots()) {
+                String sTestName = testResult.getTestClass().getName();
+                ScreenshotUtils.takeScreenshot(driver, sTestName);
+            }
+        }
+    }
+
+    protected void tearDown(WebDriver driver, ITestResult testResult) {
         log.debug("tearDownDriver()");
+        String sTestName = testResult.getTestClass().getName();
+        try{
+            ifFailed(driver, testResult);
+        } catch (AssertionError | Exception e) {
+            log.error("Error during taking screenshot for test '" + sTestName + "'. Message: " + e.getMessage());
+        }
         quitDriver(driver);
     }
 }
