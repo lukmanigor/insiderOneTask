@@ -13,13 +13,11 @@ import java.time.Duration;
 
 public class WebDriverUtils extends LoggerUtils{
 
-    public static WebDriver setupDriver(String browser) {
+    public static WebDriver setupDriver(String sBrowser) {
         WebDriver driver = null;
 
-        String sBrowser = PropertiesUtils.getBrowser();
-
         log.debug("setupDriver(" + sBrowser + ")");
-        switch (browser.toLowerCase()) {
+        switch (sBrowser.toLowerCase()) {
             case "chrome" : {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--window-size=1600,900");

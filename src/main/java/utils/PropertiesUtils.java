@@ -37,9 +37,6 @@ public class PropertiesUtils extends LoggerUtils{
         return getProperty("browser");
     }
 
-    public static String getDriversFolder() {
-        return getProperty("driversFolder");
-    }
 
     public static boolean getTakeScreenshots() {
         return Boolean.parseBoolean(getProperty("takeScreenshots"));
