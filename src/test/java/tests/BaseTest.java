@@ -6,9 +6,9 @@ import utils.*;
 
 public abstract class BaseTest extends LoggerUtils {
 
-    protected WebDriver setupDriver() {
+    protected WebDriver setupDriver(String sBrowser) {
         log.debug("setupDriver()");
-        return WebDriverUtils.setupDriver();
+        return WebDriverUtils.setupDriver(sBrowser);
     }
 
     protected void quitDriver(WebDriver driver) {

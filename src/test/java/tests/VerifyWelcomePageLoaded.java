@@ -15,7 +15,7 @@ public class VerifyWelcomePageLoaded extends BaseTest {
     @BeforeMethod
     public void setUpTest() {
         log.info("Starting test: VerifyWelcomePageLoaded");
-        driver = setupDriver();
+        driver = setupDriver("chrome");
     }
 
     @Test

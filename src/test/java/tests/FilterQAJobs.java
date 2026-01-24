@@ -16,7 +16,7 @@ public class FilterQAJobs extends BaseTest {
     @BeforeMethod
     public void setUpTest() {
         log.info("Starting test: FilterQAJobs");
-        driver = setupDriver();
+        driver = setupDriver("chrome");
     }
 
     @Test

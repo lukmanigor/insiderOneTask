@@ -13,21 +13,16 @@ import java.time.Duration;
 
 public class WebDriverUtils extends LoggerUtils{
 
-    public static WebDriver setupDriver() {
+    public static WebDriver setupDriver(String browser) {
         WebDriver driver = null;
 
         String sBrowser = PropertiesUtils.getBrowser();
-        String sDriversFolder = PropertiesUtils.getDriversFolder();
-
-        String sPathDriverChrome = sDriversFolder + "chromedriver.exe";
-        String sPathDriverFirefox = sDriversFolder + "geckodriver.exe";
 
         log.debug("setupDriver(" + sBrowser + ")");
-        switch (sBrowser) {
+        switch (browser.toLowerCase()) {
             case "chrome" : {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--window-size=1600,900");
-                    System.setProperty("webdriver.chrome.driver", sPathDriverChrome);
                     driver = new ChromeDriver(options);
 
                 break;
@@ -35,7 +30,6 @@ public class WebDriverUtils extends LoggerUtils{
             case "firefox": {
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("--window-size=1600,900");
-                    System.setProperty("webdriver.gecko.driver", sPathDriverFirefox);
                     driver = new FirefoxDriver(firefoxOptions);
                 break;
             }
