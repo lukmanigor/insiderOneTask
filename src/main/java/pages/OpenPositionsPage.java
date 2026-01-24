@@ -151,13 +151,13 @@ public class OpenPositionsPage extends BasePage {
     public void verifyQAPositions() {
         log.debug("verifyQAPositions");
         for (WebElement positionItem : positionItemsLocator) {
-            WebElement positionTitle = positionItem.findElement(By.xpath("//p[contains(@class, 'position-title')]"));
+            WebElement positionTitle = positionItem.findElement(By.xpath(".//p[contains(@class, 'position-title')]"));
             String sPositionTitleText = positionTitle.getText();
 
-            WebElement positionDepartment = positionItem.findElement(By.xpath("//span[contains(@class, 'position-department')]"));
+            WebElement positionDepartment = positionItem.findElement(By.xpath(".//span[contains(@class, 'position-department')]"));
             String sPositionDepartmentText = positionDepartment.getText();
 
-            WebElement positionLocation = positionItem.findElement(By.xpath("//div[contains(@class, 'position-location')]"));
+            WebElement positionLocation = positionItem.findElement(By.xpath(".//div[contains(@class, 'position-location')]"));
             String sPositionLocationText = positionLocation.getText();
 
             Assert.assertTrue(sPositionTitleText.contains(POSITION_TITLE_QA), "Position title does not contain 'Quality Assurance': " + sPositionTitleText);

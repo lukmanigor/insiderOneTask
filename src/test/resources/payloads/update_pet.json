@@ -1,0 +1,18 @@
+{
+  "id": 123456789,
+  "category": {
+    "id": 1,
+    "name": "Doggies"
+  },
+  "name": "Cheeky",
+  "photoUrls": [
+    "https://hips.hearstapps.com/clv.h-cdn.co/assets/16/18/gettyimages-529202089.jpg"
+  ],
+  "tags": [
+    {
+      "id": 15,
+      "name": "outdoor"
+    }
+  ],
+  "status": "adopted"
+}
