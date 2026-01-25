@@ -66,3 +66,4 @@ Location: `load-tests/`
 - Selecting browser for UI test is set on test level. This can be improved by parametrized TestNG .xml suite.
 - Timeouts had to be hardcoded in certain situation, this might've been handled better with fluent wait or explicit wait.
 - Some of the test data used for validation could've been abstracted further.
+- Screenshot names could've been parametrized with random id so every time they are taken they have a unique name.
