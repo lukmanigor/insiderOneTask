@@ -18,8 +18,6 @@ public class RestApiUtils extends LoggerUtils {
         RestAssured.baseURI = API_BASE_URL;
     }
 
-    // --- Low-level calls (return typed objects) ---
-
     private static Pet createPet(Pet payload) {
         String endpoint = ApiCalls.PET;
         log.info("API Call: POST " + endpoint);
